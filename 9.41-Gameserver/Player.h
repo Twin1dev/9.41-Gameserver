@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Ability {
+namespace Player {
 	void HookAll()
 	{
 

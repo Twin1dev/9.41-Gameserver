@@ -3,7 +3,21 @@
 
 namespace Sigs
 {
+	constexpr const char* CreateNetDriver = "48 89 5C 24 08 57 48 83 EC ? 49 8B D8 48 8B F9 E8 ? ? ? ? 48 8B D0";
+}
 
+// ya never know when you need this
+namespace MemoryUtils {
+	void NullFunction(uintptr_t Func)
+	{
+		DWORD dwProt;
+		VirtualProtect((PVOID)Func, 1, PAGE_EXECUTE_READWRITE, &dwProt);
+
+		*(uint8_t*)Func = 0xC3; // 0xC3 is ret instruction
+
+		DWORD dwTemp;
+		VirtualProtect((PVOID)Func, 1, dwProt, &dwProt);
+	}
 }
 
 uintptr_t SigScan(const char* signature, bool bRelative = false, uint32_t offset = 0) {

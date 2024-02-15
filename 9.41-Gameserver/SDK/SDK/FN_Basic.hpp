@@ -68,15 +68,23 @@ public:
 	}
 };
 
+
+namespace FMemory
+{
+	static inline void (*Free)(void* Array) = decltype(Free)(__int64(GetModuleHandleW(0)) + 0x1f19230);
+	static inline void* (*Realloc)(void*, __int64, unsigned int) = decltype(Realloc)(__int64(GetModuleHandleW(0)) + 0x1f1f560);
+}
+
 template<class T>
 class TArray
 {
 protected:
+
+
+public:
 	T* Data;
 	int32 NumElements;
 	int32 MaxElements;
-
-public:
 
 	inline TArray()
 		:NumElements(0), MaxElements(0), Data(nullptr)
@@ -84,7 +92,7 @@ public:
 	}
 
 	inline TArray(int32 Size)
-		:NumElements(0), MaxElements(Size), Data(reinterpret_cast<T*>(malloc(sizeof(T) * Size)))
+		: NumElements(0), MaxElements(Size), Data(reinterpret_cast<T*>(malloc(sizeof(T)* Size)))
 	{
 	}
 
@@ -125,6 +133,45 @@ public:
 	inline void ResetNum()
 	{
 		NumElements = 0;
+	}
+
+	inline void Reserve(const int Num)
+	{
+		Data = (T*)FMemory::Realloc(Data, (MaxElements = Num + NumElements) * sizeof(T), 0);
+	}
+
+	inline void Free()
+	{
+		if (Data)
+			FMemory::Free(Data);
+
+		MaxElements = 0;
+		NumElements = 0;
+	}
+
+	inline T& Add(const T& InData)
+	{
+		Reserve(1);
+
+		Data[NumElements] = InData;
+		++NumElements;
+
+		return Data[NumElements - 1];
+	}
+
+	inline bool Remove(int Index)
+	{
+		if (Index < NumElements)
+		{
+			if (Index != NumElements - 1)
+			{
+				Data[Index] = Data[NumElements - 1];
+			}
+
+			--NumElements;
+			return true;
+		}
+		return false;
 	}
 };
 

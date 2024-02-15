@@ -121,7 +121,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -141,15 +141,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="SDK\SDK\FN_Basic.cpp" />
+    <ClCompile Include="SDK\SDK\FN_CoreUObject_functions.cpp" />
+    <ClCompile Include="SDK\SDK\FN_Engine_functions.cpp" />
+    <ClCompile Include="SDK\SDK\FN_FortniteGame_functions.cpp" />
+    <ClCompile Include="SDK\SDK\FN_GameplayAbilities_functions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abilities.h" />
+    <ClInclude Include="Gamemode.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hooks.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="Net.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SDK\PropertyFixup.hpp" />
+    <ClInclude Include="SDK\SDK.hpp" />
     <ClInclude Include="Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="F:\Fortnite Builds\9.41\9.41\FortniteGame\Binaries\Win64\offset.log" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
