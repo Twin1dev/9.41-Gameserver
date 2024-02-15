@@ -25,6 +25,7 @@ namespace Hooks {
 		GameMode::HookAll();
 		Player::HookAll();
 
+
 		CREATEHOOK(BaseAddress() + 0x3096fa0, TickFlushHook, &TickFlush);
 
 		MH_EnableHook(MH_ALL_HOOKS);
