@@ -1,5 +1,7 @@
 #include "Includes.h"
 
+// dont use this to profit off your own "project" please, i cant really sue you but like its just weird
+
 DWORD WINAPI Main(LPVOID)
 {
     AllocConsole();
@@ -7,6 +9,10 @@ DWORD WINAPI Main(LPVOID)
     freopen_s(&fptr, "CONOUT$", "w+", stdout);
 
     MH_Initialize();
+
+    InitGObjects();
+
+    SetConsoleTitleA("9.41 Gameserver by Twin1dev");
 
     return 0;
 }
