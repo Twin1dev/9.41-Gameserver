@@ -13,6 +13,9 @@ namespace Hooks {
 
 		CREATEHOOK(BaseAddress() + 0x2cef6c0, GetNetModeActor, nullptr);
 
+		// set pawn budget :nerd:
+		UKismetSystemLibrary::GetDefaultObj()->ExecuteConsoleCommand(UWorld::GetWorld(), L"log LogFortSignificance NoLogging", UWorld::GetWorld()->OwningGameInstance->LocalPlayers[0]->PlayerController);
+
 		UWorld::GetWorld()->OwningGameInstance->LocalPlayers.Remove(0);
 
 		UKismetSystemLibrary::GetDefaultObj()->ExecuteConsoleCommand(UWorld::GetWorld(), L"open Athena_Terrain", nullptr); // looks skunked but holy shit does using switchlevel crash on this season
@@ -20,6 +23,7 @@ namespace Hooks {
 		MemoryUtils::NullFunction(BaseAddress() + 0x15231c0);
 
 		GameMode::HookAll();
+		Player::HookAll();
 
 		CREATEHOOK(BaseAddress() + 0x3096fa0, TickFlushHook, &TickFlush);
 
