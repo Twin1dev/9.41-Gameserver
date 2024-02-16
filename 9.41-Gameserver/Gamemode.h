@@ -98,6 +98,10 @@ APawn* SpawnDefaultPawnForHook(AGameModeBase* GameMode, AController* NewPlayer, 
 		GivePCItem((AFortPlayerController*)NewPlayer, StartingItem.Item, StartingItem.Count);
 	}
 
+	static auto DefaultPickaxe = StaticFindObject<UAthenaPickaxeItemDefinition>("/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe");
+
+	GivePCItem((AFortPlayerController*)NewPlayer, DefaultPickaxe->WeaponDefinition, 1);
+
 	Update((AFortPlayerController*)NewPlayer);
 
 	auto PlayerState = (AFortPlayerState*)NewPlayer->PlayerState;

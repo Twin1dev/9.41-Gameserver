@@ -15,13 +15,17 @@
 
 #include "Hooks.h"
 
+#define CONSOLE;
 // dont use this to profit off your own "project" please, i cant really sue you but like its just weird
 
 DWORD WINAPI Main(LPVOID)
 {
+
+#ifdef CONSOLE
     AllocConsole();
     FILE* fptr;
     freopen_s(&fptr, "CONOUT$", "w+", stdout);
+#endif
 
     MH_Initialize();
 
