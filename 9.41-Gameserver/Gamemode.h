@@ -58,6 +58,13 @@ bool ReadyToStartMatchHook(AFortGameModeAthena* GameMode)
 			UWorld::GetWorld()->LevelCollections[0].NetDriver = UWorld::GetWorld()->NetDriver;
 			UWorld::GetWorld()->LevelCollections[1].NetDriver = UWorld::GetWorld()->NetDriver;
 
+			if ((UWorld::GetWorld()->NetDriver->MaxInternetClientRate < UWorld::GetWorld()->NetDriver->MaxClientRate) && (UWorld::GetWorld()->NetDriver->MaxInternetClientRate > 2500))
+			{
+				LOG("Setting MaxClientRate to MaxInternetClientRate");
+				
+				UWorld::GetWorld()->NetDriver->MaxClientRate = UWorld::GetWorld()->NetDriver->MaxInternetClientRate;
+			}
+
 			LOG("Listening on Port 7777!");
 			SetConsoleTitleA("9.41 Gameserver | Listening on Port 7777");
 		}
@@ -78,6 +85,24 @@ APawn* SpawnDefaultPawnForHook(AGameModeBase* GameMode, AController* NewPlayer, 
 	auto Transform = StartSpot->GetTransform();
 
 	auto NewPawn = GameMode->SpawnDefaultPawnAtTransform(NewPlayer, Transform);
+
+	static auto StartingItems = GetGameMode()->StartingItems;
+
+	for (int i = 0; i < StartingItems.Num(); i++)
+	{
+		auto StartingItem = StartingItems[i];
+
+		if (!StartingItem.Item)
+			continue;
+
+		GivePCItem((AFortPlayerController*)NewPlayer, StartingItem.Item, StartingItem.Count);
+	}
+
+	Update((AFortPlayerController*)NewPlayer);
+
+	auto PlayerState = (AFortPlayerState*)NewPlayer->PlayerState;
+
+	ApplySetToASC(PlayerState->AbilitySystemComponent);
 
 	return NewPawn;
 }

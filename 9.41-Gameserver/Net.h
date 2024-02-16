@@ -22,6 +22,8 @@ static ENetMode GetNetModeActor()
 	return NetMode;
 }
 
+float GetMaxTickrateHook() { return 30.f; };
+
 // For Listening
 inline UNetDriver* (*CreateNetDriver)(UEngine* Engine, UWorld* InWorld, FName NetDriverDefinition);
 inline bool (*InitListen)(UNetDriver* Driver, void* InNotify, FURL& LocalURL, bool bReuseAddressAndPort, FString& Error);

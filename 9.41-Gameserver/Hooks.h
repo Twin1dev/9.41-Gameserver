@@ -2,6 +2,7 @@
 
 namespace Hooks {
 	char __fastcall RetZeroHook() { LOG("CallToZero"); return 0; }
+	bool ReturnTrueHook() { return true; }
 
 	void StartServer()
 	{
@@ -24,7 +25,11 @@ namespace Hooks {
 
 		GameMode::HookAll();
 		Player::HookAll();
+		Abilities::HookAll();
 
+		CREATEHOOK(BaseAddress() + 0x8fd560, ReturnTrueHook, nullptr); // CanActivateAbility
+
+		CREATEHOOK(BaseAddress() + 0x3323740, GetMaxTickrateHook, nullptr);
 
 		CREATEHOOK(BaseAddress() + 0x3096fa0, TickFlushHook, &TickFlush);
 
