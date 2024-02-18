@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Util.h"
 
+#include "Player.h"
 #include "Net.h"
 
 #include "Abilities.h"
@@ -51,4 +52,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
+
+
 

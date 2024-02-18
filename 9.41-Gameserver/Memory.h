@@ -20,6 +20,45 @@ namespace MemoryUtils {
 	}
 }
 
+class UWorld* UWorld::GetWorld()
+{
+	if (UEngine* Engine = UEngine::GetEngine())
+	{
+		if (!Engine->GameViewport)
+			return nullptr;
+
+		return Engine->GameViewport->World;
+	}
+
+	return nullptr;
+}
+
+void UActorComponent::SetTickGroup(enum class ETickingGroup NewTickGroup)
+{
+	static class UFunction* Func = nullptr;
+
+	if (!Func)
+		Func = Class->GetFunction("ActorComponent", "SetTickGroup");
+
+	Params::UActorComponent_SetTickGroup_Params Parms{};
+
+	Parms.NewTickGroup = NewTickGroup;
+
+	auto Flgs = Func->FunctionFlags;
+	Func->FunctionFlags |= 0x400;
+
+	UObject::ProcessEvent(Func, &Parms);
+
+
+	Func->FunctionFlags = Flgs;
+
+}
+
+static void HookExec(UFunction* Function, void* Hook, void** OG = nullptr)
+{
+
+}
+
 uintptr_t SigScan(const char* signature, bool bRelative = false, uint32_t offset = 0) {
 	uintptr_t base_address = reinterpret_cast<uintptr_t>(GetModuleHandle(NULL));
 	static auto patternToByte = [](const char* pattern)
