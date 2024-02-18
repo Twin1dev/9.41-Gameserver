@@ -22,6 +22,16 @@ void ServerCreateBuildingActorHook(UObject* Context, FFrame* Stack, void* Ret)
 	char Gangster;
 
 	bool bCanBuild = !CantBuild(UWorld::GetWorld(), PC->BroadcastRemoteClientInfo->RemoteBuildableClass, CreateBuildingData->BuildLoc, CreateBuildingData->BuildRot, CreateBuildingData->bMirrored, &ExistingBuildings, &Gangster);
+
+	if (bCanBuild)
+	{
+		for (int i = 0; i < ExistingBuildings.Num(); i++)
+		{
+			auto ExistingBuilding = ExistingBuildings[i];
+
+			ExistingBuilding->K2_DestroyActor();
+		}
+	}
 }
 
 void ServerAcknowlegePossessionHook(APlayerController* Controller, APawn* Pawn) { Controller->AcknowledgedPawn = Pawn; }
