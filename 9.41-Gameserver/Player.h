@@ -1,6 +1,6 @@
 #pragma once
 #include "Globals.h"
-
+#include "Includes.h"
 
 static inline void (*ServerCreateBuildingActor)(UObject* Context, FFrame* Stack, void* Ret);
 void ServerCreateBuildingActorHook(UObject* Context, FFrame* Stack, void* Ret)
@@ -150,6 +150,5 @@ namespace Player {
 
 		VirtualHook(FortPlayerControllerAthenaDefault->Vft, 264, ServerAcknowlegePossessionHook);
 		VirtualHook(FortPlayerControllerAthenaDefault->Vft, 509, ServerExecuteInventoryItemHook);
-
 	}
 }
