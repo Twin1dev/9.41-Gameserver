@@ -31,7 +31,26 @@ void ServerCreateBuildingActorHook(UObject* Context, FFrame* Stack, void* Ret)
 
 			ExistingBuilding->K2_DestroyActor();
 		}
+
+		auto NewBuilding = SpawnActor<ABuildingSMActor>(CreateBuildingData->BuildLoc, CreateBuildingData->BuildRot, PC->BroadcastRemoteClientInfo->RemoteBuildableClass);
+		
+		if (NewBuilding)
+		{
+			ExistingBuildings.Free();
+
+			NewBuilding->bPlayerPlaced = true;
+			NewBuilding->SetTeam(((AFortPlayerStateAthena*)PC->PlayerState)->TeamIndex);
+			NewBuilding->OnRep_Team();
+
+			NewBuilding->InitializeKismetSpawnedBuildingActor(NewBuilding, PC, true);
+		}
 	}
+	else {
+		ExistingBuildings.Free();
+		return ServerCreateBuildingActor(Context, Stack, Ret);
+	}
+
+	return ServerCreateBuildingActor(Context, Stack, Ret);
 }
 
 void ServerAcknowlegePossessionHook(APlayerController* Controller, APawn* Pawn) { Controller->AcknowledgedPawn = Pawn; }
