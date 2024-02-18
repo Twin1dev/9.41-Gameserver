@@ -174,6 +174,29 @@ __forceinline void Update(AFortPlayerController* PC, bool bMark = true)
 		PC->WorldInventory->Inventory.MarkArrayDirty();
 }
 
+UFortWeaponItemDefinition* FindItemDefFromGuid(AFortPlayerController* PC, FGuid ItemGuid)
+{
+	for (int i = 0; i < PC->WorldInventory->Inventory.ItemInstances.Num(); i++)
+	{
+		if (PC->WorldInventory->Inventory.ItemInstances[i]->ItemEntry.ItemGuid == ItemGuid)
+			return (UFortWeaponItemDefinition*)PC->WorldInventory->Inventory.ItemInstances[i]->ItemEntry.ItemDefinition;
+	}
+
+	return nullptr;
+}
+
+FFortItemEntry* FindItemEntry(AFortPlayerController* PC, UFortItemDefinition* ItemDef)
+{
+	if (!PC || !ItemDef)
+		return nullptr;
+	for (int i = 0; i < PC->WorldInventory->Inventory.ReplicatedEntries.Num(); i++)
+	{
+		if (PC->WorldInventory->Inventory.ReplicatedEntries[i].ItemDefinition == ItemDef)
+			return &PC->WorldInventory->Inventory.ReplicatedEntries[i];
+	}
+	return nullptr;
+}
+
 
 namespace Inventory {
 	void HookAll()
