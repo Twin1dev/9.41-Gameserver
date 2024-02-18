@@ -180,20 +180,4 @@ namespace Inventory {
 	{
 
 	}
-
-FFortItemEntry* FindItemEntry(AFortPlayerController* PC, UFortItemDefinition* ItemDef)
-{
-	if (!PC || !PC->WorldInventory)
-		return nullptr;
-	for (int i = 0; i < PC->WorldInventory->Inventory.ReplicatedEntries.Num(); ++i)
-	{
-		if (PC->WorldInventory->Inventory.ReplicatedEntries[i].ItemDefinition == ItemDef)
-		{
-			return &PC->WorldInventory->Inventory.ReplicatedEntries[i];
-		}
-	}
-	return nullptr;
-}
-
-UFortWorldItem* CreateItem(AFortPlayerController* Player, UFortItemDefinition* ItemDef, int Count = 1)
 }

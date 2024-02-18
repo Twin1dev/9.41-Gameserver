@@ -8,6 +8,25 @@ inline T* StaticFindObject(std::string ObjectPath, UClass* Class = UObject::Stat
 	return (T*)StaticFindObject_(Class, nullptr, std::wstring(ObjectPath.begin(), ObjectPath.end()).c_str(), false);
 }
 
+struct FFrame
+{
+    char pad[0x10];
+    class UFunction* Node;
+    UObject* Object;
+    uint8* Code;
+    uint8* Locals;
+};
+
+struct AFortPlayerController_ServerEditBuildingActor_Params
+{
+public:
+	class ABuildingSMActor* BuildingActorToEdit;                               // 0x0(0x8)(Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+	TSubclassOf<class ABuildingSMActor>          NewBuildingClass;                                  // 0x8(0x8)(Parm, ZeroConstructor, IsPlainOldData, NoDestructor, UObjectWrapper, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+	uint8                                        RotationIterations;                                // 0x10(0x1)(Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+	bool                                         bMirrored;                                         // 0x11(0x1)(Parm, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash, NativeAccessSpecifierPublic)
+	uint8                                        Pad_2825[0x6];                                     // Fixing Size Of Struct [ Dumper-7 ]
+};
+
 template <typename T>
 inline T* StaticLoadObject(std::string Path, UClass* InClass = T::StaticClass(), UObject* Outer = nullptr)
 {

@@ -5,7 +5,6 @@
 #include "Globals.h"
 #include "Util.h"
 
-#include "Player.h"
 #include "Net.h"
 
 #include "Abilities.h"
@@ -16,7 +15,6 @@
 
 #include "Hooks.h"
 
-#define CONSOLE;
 // dont use this to profit off your own "project" please, i cant really sue you but like its just weird
 
 DWORD WINAPI Main(LPVOID)
@@ -52,6 +50,4 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
-
-
 
