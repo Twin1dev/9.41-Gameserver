@@ -15,7 +15,7 @@
 
 #include "Hooks.h"
 
-#define CONSOLE;
+#define CONSOLE
 // dont use this to profit off your own "project" please, i cant really sue you but like its just weird
 
 DWORD WINAPI Main(LPVOID)

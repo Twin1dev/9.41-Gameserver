@@ -23,6 +23,12 @@ bool ReadyToStartMatchHook(AFortGameModeAthena* GameMode)
 
 		UFortPlaylistAthena* Playlist = StaticFindObject<UFortPlaylistAthena>("/Game/Athena/Playlists/Playlist_DefaultSolo.Playlist_DefaultSolo");
 
+		std::cout << "GamePhaseBefore: " << (uint64)((AFortGameStateAthena*)(GameMode->GameState))->GamePhase << "\n";
+		std::cout << "Before: " << GameMode->WarmupRequiredPlayerCount << "\n";
+		GameMode->WarmupRequiredPlayerCount = 1;
+		std::cout << "After: " << GameMode->WarmupRequiredPlayerCount << "\n";
+
+
 		GetGameState()->CurrentPlaylistInfo.BasePlaylist = Playlist;
 		GetGameState()->CurrentPlaylistInfo.OverridePlaylist = Playlist;
 		GetGameState()->CurrentPlaylistInfo.PlaylistReplicationKey++;
@@ -32,10 +38,6 @@ bool ReadyToStartMatchHook(AFortGameModeAthena* GameMode)
 		CreateNetDriver = decltype(CreateNetDriver)(SigScan(Sigs::CreateNetDriver));
 		SetWorld = decltype(SetWorld)(BaseAddress() + 0x3096230);
 		InitListen = decltype(InitListen)(BaseAddress() + 0x6c7460);
-
-		// ???
-		GameMode->StartMatch();
-		GameMode->StartPlay();
 
 		UWorld::GetWorld()->NetDriver = CreateNetDriver(UFortEngine::GetEngine(), UWorld::GetWorld(), UKismetStringLibrary::GetDefaultObj()->Conv_StringToName(L"GameNetDriver"));
 
@@ -68,12 +70,8 @@ bool ReadyToStartMatchHook(AFortGameModeAthena* GameMode)
 			LOG("Listening on Port 7777!");
 			SetConsoleTitleA("9.41 Gameserver | Listening on Port 7777");
 		}
-
-		GetGameState()->PlayersLeft--;
-		GetGameState()->OnRep_PlayersLeft();
+		std::cout << "GamePhaseAfter: " << (uint64)((AFortGameStateAthena*)(GameMode->GameState))->GamePhase << "\n";
 		GetGameMode()->bWorldIsReady = true;
-
-		GetGameMode()->WarmupRequiredPlayerCount = 1;
 	}
 
 	bool ret = ReadyToStartMatch(GameMode);
