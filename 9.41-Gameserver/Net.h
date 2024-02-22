@@ -24,6 +24,15 @@ static ENetMode GetNetModeActor()
 
 float GetMaxTickrateHook() { return 30.f; };
 
+static __int64 (*DispatchRequest)(__int64 a1, __int64* a2, int a3);
+
+static __int64 DispatchRequestHook(__int64 a1, __int64* a2, int a3)
+{
+	*(int*)(__int64(a2) + 0x28) = 3;
+
+	return DispatchRequest(a1, a2, 3);
+}
+
 // For Listening
 inline UNetDriver* (*CreateNetDriver)(UEngine* Engine, UWorld* InWorld, FName NetDriverDefinition);
 inline bool (*InitListen)(UNetDriver* Driver, void* InNotify, FURL& LocalURL, bool bReuseAddressAndPort, FString& Error);

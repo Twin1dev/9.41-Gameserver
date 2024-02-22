@@ -109,7 +109,10 @@ APawn* SpawnDefaultPawnForHook(AGameModeBase* GameMode, AController* NewPlayer, 
 	return NewPawn;
 }
 
+void ServerLoadingScreenDroppedHook(AFortPlayerControllerAthena* PlayerController)
+{
 
+}
 
 namespace GameMode {
 	void HookAll()
